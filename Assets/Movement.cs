@@ -17,6 +17,7 @@ public class Movement : MonoBehaviour
     public bool isGrounded = false;
     bool isLeftShift;
     float moveHorizontal;
+    float moveVertical;
 
     void Start()
     {
@@ -30,6 +31,7 @@ public class Movement : MonoBehaviour
     {
        isLeftShift = Input.GetKey(KeyCode.LeftShift);
        moveHorizontal = Input.GetAxis("Horizontal");
+       moveVertical = Input.GetAxis("Vertical");
 
        if (moveHorizontal>0)
        {
@@ -40,19 +42,20 @@ public class Movement : MonoBehaviour
          sr.flipX = true;
        }
 
-        if (moveHorizontal == 0)
+        if (moveHorizontal == 0 && moveVertical == 0)
         {
-            anim.SetBool("isRunning",true);
+            anim.SetBool("isRunning",false);
         }
         else
         {
-            anim.SetBool(name:"isRunning",true);
+            anim.SetBool("isRunning",true);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(Vector3.up * upForce);
             isGrounded = false;
+            anim.SetBool("isJumping",true);
         }
 
     }
@@ -61,11 +64,11 @@ public class Movement : MonoBehaviour
     {
          if (isLeftShift)
         {
-            rb.velocity = new Vector3(moveHorizontal * runSpeed * Time.deltaTime, rb.velocity.y,0);
+            rb.velocity = new Vector3(moveHorizontal * runSpeed * Time.deltaTime, rb.velocity.y, moveVertical * runSpeed * Time.deltaTime);
         }
         else 
         {
-            rb.velocity = new Vector3(moveHorizontal * speed * Time.deltaTime, rb.velocity.y,0);
+            rb.velocity = new Vector3(moveHorizontal * speed * Time.deltaTime, rb.velocity.y, moveVertical * speed * Time.deltaTime);
         }
     }
 
@@ -73,5 +76,6 @@ public class Movement : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         isGrounded = true;
+        anim.SetBool("isJumping",false);
     }
 }
