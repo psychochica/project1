@@ -78,4 +78,11 @@ public class Movement : MonoBehaviour
         isGrounded = true;
         anim.SetBool("isJumping",false);
     }
+
+    public void Save()
+    {
+        SaveData.instance.playerX = transform.position.x;
+        SaveData.instance.playerY = transform.position.y;
+        SaveData.instance.playerZ = transform.position.z;
+    }
 }
