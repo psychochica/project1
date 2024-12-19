@@ -10166,7 +10166,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
-  point1: {fileID: 1939416461}
+  stoppingDistanceCheck: 0.01
+  points:
+  - {fileID: 1939416461}
+  - {fileID: 814627078}
+  - {fileID: 814627078}
+  targetIndex: 0
 --- !u!195 &8861638610747099166
 NavMeshAgent:
   m_ObjectHideFlags: 0

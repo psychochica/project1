@@ -9,8 +9,18 @@ public class AIController : MonoBehaviour
     SpriteRenderer sr;
     Animator anim;
 
-    public Transform point1;
    
+
+   // public Transform point1;
+    //public Transform point2;
+
+    //private bool isGoingToPoint1 = true;
+
+    public float stoppingDistanceCheck = 0.01f;
+
+    public List<Transform> points;
+    public int targetIndex = 0;
+
 
     void Start()
     {
@@ -19,22 +29,63 @@ public class AIController : MonoBehaviour
         sr = GetComponentInChildren<SpriteRenderer>();
     }
 
+
    
     void Update()
     {
-        if (point1 == null)
-            agent.SetDestination(point1.position);
+        if(points.Count < 1)
+        {
+            return;
+        }
 
-            if (agent.velocity.x > 0)
+        if (agent.remainingDistance < stoppingDistanceCheck)
+
             {
-                sr.flipX = false;
-            }
-            else if (agent.velocity.x < 0)
-            {
-                sr.flipX = true;
+            targetIndex = Random.Range(0, points.Count);
+
+            //for ordered moving between points
+           //targetIndex++;
+           
+            //if (targetIndex >= points.Count)
+            //{
+            //    targetIndex = 0;
+            //}
+
             }
 
-        agent.SetDestination(point1.position);
+
+            agent.SetDestination(points[targetIndex].position);
+
+
+
+        //if (point1 == null || point2 == null)
+
+
+
+        //    if (agent.velocity.x > 0)
+        //    {
+        //        sr.flipX = false;
+        //    }
+        //    else if (agent.velocity.x < 0)
+        //    {
+        //        sr.flipX = true;
+        //    }
+
+        //if (agent.remainingDistance < stoppingDistanceCheck)
+
+        //{
+        //    isGoingToPoint1 = !isGoingToPoint1;
+        //}
+
+        //if (isGoingToPoint1)
+        //{
+        //    agent.SetDestination(point1.position);
+        //}
+
+        //else
+        //{
+        //    agent.SetDestination(point2.position);
+        //}
 
         if (agent.velocity.magnitude <= 0)
         {
